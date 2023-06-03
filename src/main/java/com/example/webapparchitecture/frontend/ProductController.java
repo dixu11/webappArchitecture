@@ -1,4 +1,4 @@
-package com.example.webapparchitecture.controller;
+package com.example.webapparchitecture.frontend;
 
 import com.example.webapparchitecture.dto.ProductDto;
 import com.example.webapparchitecture.service.ProductService;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ProductController {
 
-    private ProductService productService;
+    private RestApiClient restApiClient;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(RestApiClient restApiClient) {
+        this.restApiClient = restApiClient;
     }
 
     @GetMapping("/add-product")
@@ -23,7 +23,7 @@ public class ProductController {
     @PostMapping("/add-new-product")
     public String addProduct(String name) {
         ProductDto productDto = new ProductDto(name);
-        productService.addProduct(productDto);
+        restApiClient.sendAddProductHttpRequest(productDto);
         return "success.html";
     }
 }
